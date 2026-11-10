@@ -67,18 +67,17 @@
 ## Public projects
 
 <!-- PUBLIC-PROJECTS:START -->
-Other public projects:
+### Public projects (3)
 
-- [daimon-memory](https://github.com/Ardynai/daimon-memory)
-- [dev-plat-agenthub](https://github.com/Ardynai/dev-plat-agenthub)
+- [daimon&#45;memory](https://github.com/Ardynai/daimon-memory) · Shared&#44; cross&#45;tool memory and operating discipline for AI assistants&#46; Deterministic recall&#44; curated capture&#44; one persona across Claude Code&#44; Codex&#44; and Hermes&#46; Postgres &#43; Qdrant&#44; MCP &#43; REST&#46;
+- [dev&#45;plat&#45;agenthub](https://github.com/Ardynai/dev-plat-agenthub) · A bot &#40;agent&#41; coordination portal for talking between bots&#44; coordinating work&#44; and onboarding them to slack
+- [worldgen&#45;forge](https://github.com/Ardynai/worldgen-forge) · Agentic 3D open&#45;world generation at scale &#8212; terrain&#44; layout&#44; TRELLIS&#46;2 assets&#44; engine exports&#46; Any GPU or none&#46;
 <!-- PUBLIC-PROJECTS:END -->
 
 ## Open-source forks
 
 <!-- PUBLIC-FORKS:START -->
-[**1,025 forked repositories →**](https://github.com/Ardynai?tab=repositories&type=fork)
-
-Public fork count checked November 10, 2026. Forks retain their upstream attribution.
+[**1,025 public forks**](https://github.com/Ardynai?tab=repositories&type=fork) · Explore my forked repositories.
 <!-- PUBLIC-FORKS:END -->
 
 <details>
@@ -1249,9 +1248,24 @@ Public fork count checked November 10, 2026. Forks retain their upstream attribu
 ## Following
 
 <!-- PUBLIC-FOLLOWING:START -->
-[**Following 384 accounts →**](https://github.com/Ardynai?tab=following)
+### Following (383)
 
-From my following list: [hydro-project](https://github.com/hydro-project) · [qybaihe](https://github.com/qybaihe) · [EpicGames](https://github.com/EpicGames) · [xtool-org](https://github.com/xtool-org) · [echelon](https://github.com/echelon) · [storytold](https://github.com/storytold) · [Noah-Tervalon-Nvidia](https://github.com/Noah-Tervalon-Nvidia) · [PostHog](https://github.com/PostHog) · [NickM-27](https://github.com/NickM-27) · [bensenescu](https://github.com/bensenescu) · [basecamp](https://github.com/basecamp) · [NVIDIA-NeMo](https://github.com/NVIDIA-NeMo).
+[View who I follow](https://github.com/Ardynai?tab=following)
+
+From my following list:
+
+- [0xNyk](https://github.com/0xNyk)
+- [4ian](https://github.com/4ian)
+- [A&#45;EVO&#45;Lab](https://github.com/A-EVO-Lab)
+- [a16z&#45;infra](https://github.com/a16z-infra)
+- [a2aproject](https://github.com/a2aproject)
+- [abhiaiyer91](https://github.com/abhiaiyer91)
+- [abhigyanpatwari](https://github.com/abhigyanpatwari)
+- [aboul3la](https://github.com/aboul3la)
+- [abus&#45;aikorea](https://github.com/abus-aikorea)
+- [Adam&#45;CAD](https://github.com/Adam-CAD)
+- [addyosmani](https://github.com/addyosmani)
+- [aftertheflood](https://github.com/aftertheflood)
 <!-- PUBLIC-FOLLOWING:END -->
 
 ## Contribution matrix
