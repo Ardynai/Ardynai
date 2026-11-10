@@ -1,0 +1,71 @@
+# Installed with owner approval: public data updates only.
+# No third-party actions, package downloads, PATs, or persistent credentials.
+name: Refresh public profile
+on:
+  schedule:
+    - cron: '23 7 * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: public-profile-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: github.repository == 'Ardynai/Ardynai'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - name: Verify canonical public profile repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import urllib.request
+          class RejectRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, *args, **kwargs):
+                  raise RuntimeError('Canonical profile repository redirects; aborting')
+          opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), RejectRedirect())
+          request = urllib.request.Request('https://api.github.com/repos/Ardynai/Ardynai', headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'Ardynai-public-profile'})
+          with opener.open(request, timeout=30) as response:
+              data = json.load(response)
+          if data.get('private') is not False or data.get('full_name', '').lower() != 'ardynai/ardynai':
+              raise RuntimeError('Expected the public Ardynai/Ardynai profile repository')
+          PY
+      - name: Fetch public default branch without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          git check-ref-format "refs/heads/$DEFAULT_BRANCH"
+          git init .
+          git remote add origin https://github.com/Ardynai/Ardynai.git
+          git -c credential.helper= fetch --depth=1 origin "refs/heads/$DEFAULT_BRANCH"
+          git checkout --detach FETCH_HEAD
+      - name: Test and refresh public sections without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s automation -p 'test_*.py' -v
+          python3 automation/update_profile.py --readme README.md --readme README-static.md
+      - name: Commit only the two READMEs using repository-scoped token
+        env:
+          GH_COMMIT_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- README.md README-static.md; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- README.md README-static.md
+          git commit -m 'Refresh public profile sections'
+          # Credential lives only in this process environment, never a URL or file.
+          export GIT_CONFIG_COUNT=2
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_COMMIT_TOKEN" | base64 -w0)"
+          export GIT_CONFIG_KEY_1=credential.helper
+          export GIT_CONFIG_VALUE_1=''
+          git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
