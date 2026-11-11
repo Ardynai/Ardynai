@@ -67,10 +67,8 @@
 ## Public projects
 
 <!-- PUBLIC-PROJECTS:START -->
-### Public projects (3)
+### Public projects (1)
 
-- [daimon&#45;memory](https://github.com/Ardynai/daimon-memory) · Shared&#44; cross&#45;tool memory and operating discipline for AI assistants&#46; Deterministic recall&#44; curated capture&#44; one persona across Claude Code&#44; Codex&#44; and Hermes&#46; Postgres &#43; Qdrant&#44; MCP &#43; REST&#46;
-- [dev&#45;plat&#45;agenthub](https://github.com/Ardynai/dev-plat-agenthub) · A bot &#40;agent&#41; coordination portal for talking between bots&#44; coordinating work&#44; and onboarding them to slack
 - [worldgen&#45;forge](https://github.com/Ardynai/worldgen-forge) · Agentic 3D open&#45;world generation at scale &#8212; terrain&#44; layout&#44; TRELLIS&#46;2 assets&#44; engine exports&#46; Any GPU or none&#46;
 <!-- PUBLIC-PROJECTS:END -->
 

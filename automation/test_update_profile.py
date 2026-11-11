@@ -27,6 +27,39 @@ def document():
 
 
 class UpdateTests(unittest.TestCase):
+
+    def test_owner_requested_project_exclusions(self):
+        for excluded_names in (('daimon-memory', 'dev-plat-agenthub'),
+                               ('DAIMON-MEMORY', 'Dev-Plat-AgentHub')):
+            with self.subTest(names=excluded_names), tempfile.TemporaryDirectory() as d:
+                paths = [Path(d) / name for name in ('README.md', 'README-static.md')]
+                originals = [document(), b'STATIC ARTWORK\n' + document()]
+                for path, original in zip(paths, originals):
+                    path.write_bytes(original)
+                records = [repo(name) for name in excluded_names] + [repo('worldgen-forge')]
+                people = [{'login': 'example'}]
+                get = fixture(records, people)
+                data = updater.collect(get)
+                self.assertIn('Public projects (1)', data['PUBLIC-PROJECTS'])
+                self.assertIn('/Ardynai/worldgen-forge)', data['PUBLIC-PROJECTS'])
+                for name in excluded_names:
+                    self.assertNotIn(name.lower(), data['PUBLIC-PROJECTS'].lower())
+                self.assertEqual(updater.collect(fixture([repo('worldgen-forge')], people))['PUBLIC-FOLLOWING'], data['PUBLIC-FOLLOWING'])
+                fork_data = updater.collect(fixture([repo(name, fork=True) for name in excluded_names]))
+                self.assertIn('2 public forks', fork_data['PUBLIC-FORKS'])
+                updater.update_many(paths, get)
+                for path, original in zip(paths, originals):
+                    result = path.read_bytes()
+                    self.assertIn(b'/Ardynai/worldgen-forge)', result)
+                    for name in excluded_names:
+                        self.assertNotIn(name.lower().encode(), result.lower())
+                    for name in updater.BLOCKS:
+                        start = f'<!-- {name}:START -->'.encode()
+                        end = f'<!-- {name}:END -->'.encode()
+                        a, b = result.index(start) + len(start), result.index(end)
+                        result = result[:a] + b'\nold\n' + result[b:]
+                    self.assertEqual(original, result)
+
     def test_more_than_1000_forks_and_pagination(self):
         data = updater.collect(fixture([repo(f'fork-{i}', True) for i in range(1205)] + [repo('new')], [{'login': f'person-{i}'} for i in range(205)]))
         self.assertIn('1,205 public forks', data['PUBLIC-FORKS'])

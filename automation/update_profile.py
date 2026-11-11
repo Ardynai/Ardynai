@@ -11,6 +11,8 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler, ProxyHand
 
 USER = 'Ardynai'
 API = 'https://api.github.com'
+# Owner-requested display exclusions; fork counts and following remain unchanged.
+EXCLUDED_PUBLIC_PROJECTS = frozenset({'daimon-memory', 'dev-plat-agenthub'})
 BLOCKS = ('PUBLIC-PROJECTS', 'PUBLIC-FORKS', 'PUBLIC-FOLLOWING')
 
 class UnsafeResponse(ValueError):
@@ -87,7 +89,7 @@ def collect(get=fetch):
         names.add(name.lower())
         if repo['fork']:
             forks += 1
-        elif name.lower() != USER.lower():
+        elif name.lower() != USER.lower() and name.lower() not in EXCLUDED_PUBLIC_PROJECTS:
             description = repo.get('description')
             if description is not None and not isinstance(description, str):
                 raise UnsafeResponse('Invalid description')
