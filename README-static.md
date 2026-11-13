@@ -75,7 +75,7 @@
 ## Open-source forks
 
 <!-- PUBLIC-FORKS:START -->
-[**1,026 public forks**](https://github.com/Ardynai?tab=repositories&type=fork) · Explore my forked repositories.
+[**1,027 public forks**](https://github.com/Ardynai?tab=repositories&type=fork) · Explore my forked repositories.
 <!-- PUBLIC-FORKS:END -->
 
 <details>
